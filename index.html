@@ -588,12 +588,10 @@
                 date: new Date().toLocaleString()
             };
 
-            // 👉 將下方的 URL 替換成你部署 Google Apps Script 後取得的網址
-            const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz_XXXXXXXXXXXX/exec"; 
+            // 👉 已經替換為你專屬的 Google Apps Script 網址
+            const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwazoDXBhJeytH4ttNhF6KVo8oabXNbSEi8WfTvmKG21s8fJEErr3YbxEydk9t3DDS1/exec"; 
 
             const statusEl = document.getElementById('upload-status');
-            
-            // --- 取消下面這段的註解 (/* ... */) 即可啟動真實上傳 ---
             
             fetch(GOOGLE_SCRIPT_URL, {
                 method: "POST",
