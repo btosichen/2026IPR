@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智慧財產權 (IPR) 互動闖關挑戰</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom Animations */
+        @keyframes pop {
+            0% { transform: scale(0.9); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-pop { animation: pop 0.4s ease-out forwards; }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+
+        /* Light Glassmorphism utility */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+        
+        .screen { display: none; }
+        .screen.active { display: flex; }
+        
+        /* Drag/Tap Item Selection */
+        .selected-item {
+            box-shadow: 0 0 0 4px #f472b6; /* Pink border for selection */
+            transform: scale(1.05);
+            transition: all 0.2s;
+            background-color: #fdf2f8 !important;
+        }
+
+        /* Custom Scrollbar for Study Section */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-teal-100 via-blue-100 to-purple-200 min-h-screen text-gray-800 font-sans overflow-x-hidden">
+
+    <!-- Screen 0: Login -->
+    <div id="screen-login" class="screen active flex-col items-center justify-center min-h-screen p-4">
+        <div class="glass-card rounded-3xl p-8 w-full max-w-md animate-pop text-center relative overflow-hidden">
+            <!-- Decorative blobs -->
+            <div class="absolute -top-10 -left-10 w-32 h-32 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob"></div>
+            <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob animation-delay-2000"></div>
+
+            <div class="relative z-10">
+                <div class="text-5xl mb-4 animate-float">🦄</div>
+                <h1 class="text-3xl font-extrabold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500">IPR 知識大挑戰</h1>
+                <p class="text-gray-500 mb-8 text-sm font-medium">保護創作，尊重原創！準備好闖關了嗎？</p>
+                
+                <form id="login-form" class="space-y-4 text-left">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-600 mb-1">班級</label>
+                        <select id="user-class" required class="w-full bg-white border-2 border-purple-100 rounded-xl p-3 text-gray-800 outline-none focus:border-purple-400 transition shadow-sm">
+                            <option value="" disabled selected>請選擇班級</option>
+                            <option value="702">702班</option>
+                            <option value="703">703班</option>
+                            <option value="704">704班</option>
+                            <option value="705">705班</option>
+                            <option value="706">706班</option>
+                        </select>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-1/3">
+                            <label class="block text-sm font-bold text-gray-600 mb-1">座號</label>
+                            <input type="number" id="user-seat" min="1" max="50" required class="w-full bg-white border-2 border-purple-100 rounded-xl p-3 text-gray-800 outline-none focus:border-purple-400 transition shadow-sm" placeholder="號碼">
+                        </div>
+                        <div class="w-2/3">
+                            <label class="block text-sm font-bold text-gray-600 mb-1">姓名</label>
+                            <input type="text" id="user-name" required class="w-full bg-white border-2 border-purple-100 rounded-xl p-3 text-gray-800 outline-none focus:border-purple-400 transition shadow-sm" placeholder="你的名字">
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full mt-6 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 rounded-xl shadow-lg transform transition active:scale-95 text-lg">
+                        進入學習秘笈 <i class="fa-solid fa-book-open ml-2"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 0.5: Study Section -->
+    <div id="screen-study" class="screen flex-col items-center justify-center min-h-screen p-4">
+        <div class="glass-card rounded-3xl p-6 w-full max-w-3xl animate-pop flex flex-col max-h-[90vh]">
+            <div class="text-center mb-4 border-b-2 border-gray-100 pb-4">
+                <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-500">📖 闖關前重點秘笈</h1>
+                <p class="text-gray-500 text-sm mt-2">花 1 分鐘看完，等等測驗拿高分！</p>
+            </div>
+            
+            <!-- Scrollable content -->
+            <div class="overflow-y-auto flex-1 pr-2 space-y-6 text-gray-700 leading-relaxed font-medium">
+                
+                <div class="bg-blue-50 p-4 rounded-2xl border border-blue-100">
+                    <h3 class="font-bold text-blue-700 text-lg mb-2"><i class="fa-solid fa-brain mr-2"></i>1. 什麼是智慧財產權 (IPR)？</h3>
+                    <p class="mb-2">簡單說，就是「人用腦袋創作出來的成果」！雖然看不到摸不到（無形財產），但非常有價值，受法律保護。</p>
+                    <ul class="list-disc list-inside text-sm text-blue-800">
+                        <li><strong>有形財產：</strong>土地、現金、手機。</li>
+                        <li><strong>無形財產：</strong>音樂、小說、設計圖。</li>
+                    </ul>
+                </div>
+
+                <div class="bg-purple-50 p-4 rounded-2xl border border-purple-100">
+                    <h3 class="font-bold text-purple-700 text-lg mb-2"><i class="fa-solid fa-layer-group mr-2"></i>2. 智慧財產權的四大天王</h3>
+                    <div class="grid grid-cols-2 gap-2 text-sm">
+                        <div class="bg-white p-2 rounded-lg shadow-sm"><strong>© 著作權：</strong>文章、音樂、影片、圖片。</div>
+                        <div class="bg-white p-2 rounded-lg shadow-sm"><strong>💡 專利權：</strong>發明、實用技術、產品功能。</div>
+                        <div class="bg-white p-2 rounded-lg shadow-sm"><strong>商 商標權：</strong>品牌Logo、麥當勞的M標誌。</div>
+                        <div class="bg-white p-2 rounded-lg shadow-sm"><strong>🔒 營業祕密：</strong>可口可樂配方、公司機密。</div>
+                    </div>
+                </div>
+
+                <div class="bg-pink-50 p-4 rounded-2xl border border-pink-100">
+                    <h3 class="font-bold text-pink-700 text-lg mb-2"><i class="fa-solid fa-copyright mr-2"></i>3. 著作權的兩大分類</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li>✨ <strong>著作人格權：</strong>不能賣給別人！包含掛名權、禁止別人亂改你的作品。就算作者過世，這權利依然存在。</li>
+                        <li>💰 <strong>著作財產權：</strong>可以轉讓、賺錢！包含重製、改作、公開播送。保護期：<span class="text-pink-600 font-bold">作者終身＋死後 50 年</span>。</li>
+                    </ul>
+                </div>
+
+                <div class="bg-yellow-50 p-4 rounded-2xl border border-yellow-100">
+                    <h3 class="font-bold text-yellow-700 text-lg mb-2"><i class="fa-solid fa-check-circle mr-2"></i>4. 著作權成立條件 (不受保護的東西)</h3>
+                    <p class="text-sm">創作必須是「人」寫的、有「具體表達」（不能只有腦中想法），而且要是獨立創作！</p>
+                    <p class="text-sm text-red-600 mt-1 font-bold">❌ 數學公式、考卷試題、新聞報導、單純的點子 👉 都不受著作權保護喔！</p>
+                </div>
+
+                <div class="bg-teal-50 p-4 rounded-2xl border border-teal-100">
+                    <h3 class="font-bold text-teal-700 text-lg mb-2"><i class="fa-solid fa-robot mr-2"></i>5. AI 與著作權</h3>
+                    <p class="text-sm">AI 只是工具！如果直接拿別人的圖叫 AI 模仿畫風，可能侵權。使用 AI 不等於一定合法，比賽時一定要看清楚規則！</p>
+                </div>
+
+            </div>
+
+            <div class="mt-4 pt-4 border-t-2 border-gray-100">
+                <button onclick="startLevel1()" class="w-full bg-gradient-to-r from-teal-400 to-blue-500 hover:from-teal-500 hover:to-blue-600 text-white font-bold py-4 rounded-xl shadow-lg transform transition active:scale-95 text-lg">
+                    我準備好了，開始挑戰！ <i class="fa-solid fa-gamepad ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 1: Level 1 (T/F) -->
+    <div id="screen-level1" class="screen flex-col items-center justify-start min-h-screen p-4 w-full max-w-2xl mx-auto">
+        <div class="w-full mt-4 mb-6 flex justify-between items-center glass-card rounded-full px-5 py-3 shadow-md border-none">
+            <span class="font-bold text-teal-600"><i class="fa-solid fa-bolt text-yellow-500 mr-2"></i> Level 1: 快問快答</span>
+            <div class="flex items-center text-pink-500 font-extrabold text-xl">
+                <i class="fa-regular fa-clock mr-2"></i> <span id="l1-timer">60</span>s
+            </div>
+        </div>
+        
+        <!-- Progress Bar -->
+        <div class="w-full bg-white/50 rounded-full h-3 mb-8 shadow-inner overflow-hidden">
+            <div id="l1-progress" class="bg-gradient-to-r from-pink-400 to-purple-500 h-3 rounded-full transition-all duration-300" style="width: 10%"></div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-8 w-full shadow-xl flex-1 flex flex-col justify-center relative overflow-hidden text-center border-none">
+            <div id="l1-feedback" class="absolute inset-0 flex items-center justify-center text-8xl opacity-0 pointer-events-none transition-opacity duration-300 z-10"></div>
+            
+            <div class="z-0">
+                <span id="l1-qnum" class="text-sm font-bold bg-blue-100 text-blue-600 px-4 py-1.5 rounded-full mb-6 inline-block shadow-sm">題號 1/10</span>
+                <h2 id="l1-question" class="text-2xl md:text-3xl font-extrabold mb-10 leading-snug min-h-[5rem] flex items-center justify-center text-gray-800">載入中...</h2>
+                
+                <div class="flex gap-6 justify-center">
+                    <button onclick="answerL1(true)" class="w-32 h-32 rounded-3xl bg-white hover:bg-green-50 shadow-md hover:shadow-lg border-4 border-green-400 flex items-center justify-center text-6xl text-green-500 transition transform active:scale-90">
+                        <i class="fa-regular fa-circle"></i>
+                    </button>
+                    <button onclick="answerL1(false)" class="w-32 h-32 rounded-3xl bg-white hover:bg-red-50 shadow-md hover:shadow-lg border-4 border-red-400 flex items-center justify-center text-6xl text-red-500 transition transform active:scale-90">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 2: Level 2 (Match) -->
+    <div id="screen-level2" class="screen flex-col items-center justify-start min-h-screen p-4 w-full max-w-3xl mx-auto">
+        <div class="w-full mt-4 mb-6 flex justify-between items-center glass-card rounded-full px-5 py-3 shadow-md border-none">
+            <span class="font-bold text-teal-600"><i class="fa-solid fa-puzzle-piece text-purple-500 mr-2"></i> Level 2: 類型配對</span>
+            <span class="text-sm text-gray-500 font-bold bg-white px-3 py-1 rounded-full">先點擊上方 👉 再點擊下方分類箱</span>
+        </div>
+
+        <!-- Items to place -->
+        <div class="w-full grid grid-cols-2 gap-4 mb-8" id="l2-items-container">
+            <!-- Populated by JS -->
+        </div>
+
+        <!-- Drop zones -->
+        <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div onclick="dropItem('著作權')" class="bg-white/80 rounded-2xl p-4 flex flex-col items-center min-h-[140px] cursor-pointer hover:bg-white transition border-blue-400 border-2 border-dashed shadow-sm">
+                <h3 class="font-extrabold text-blue-500 mb-2 border-b-2 border-blue-100 pb-2 w-full text-center">© 著作權</h3>
+                <div id="zone-著作權" class="w-full flex-1 flex flex-col gap-2"></div>
+            </div>
+            <div onclick="dropItem('專利權')" class="bg-white/80 rounded-2xl p-4 flex flex-col items-center min-h-[140px] cursor-pointer hover:bg-white transition border-green-400 border-2 border-dashed shadow-sm">
+                <h3 class="font-extrabold text-green-500 mb-2 border-b-2 border-green-100 pb-2 w-full text-center">💡 專利權</h3>
+                <div id="zone-專利權" class="w-full flex-1 flex flex-col gap-2"></div>
+            </div>
+            <div onclick="dropItem('商標權')" class="bg-white/80 rounded-2xl p-4 flex flex-col items-center min-h-[140px] cursor-pointer hover:bg-white transition border-yellow-400 border-2 border-dashed shadow-sm">
+                <h3 class="font-extrabold text-yellow-500 mb-2 border-b-2 border-yellow-100 pb-2 w-full text-center">商 商標權</h3>
+                <div id="zone-商標權" class="w-full flex-1 flex flex-col gap-2"></div>
+            </div>
+            <div onclick="dropItem('營業祕密')" class="bg-white/80 rounded-2xl p-4 flex flex-col items-center min-h-[140px] cursor-pointer hover:bg-white transition border-pink-400 border-2 border-dashed shadow-sm">
+                <h3 class="font-extrabold text-pink-500 mb-2 border-b-2 border-pink-100 pb-2 w-full text-center">🔒 營業祕密</h3>
+                <div id="zone-營業祕密" class="w-full flex-1 flex flex-col gap-2"></div>
+            </div>
+        </div>
+
+        <button onclick="checkLevel2()" id="btn-l2-check" class="mt-8 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-10 rounded-xl shadow-lg hidden">
+            確認送出 <i class="fa-solid fa-paper-plane ml-2"></i>
+        </button>
+    </div>
+
+    <!-- Screen 3: Level 3 (AI Scenarios) -->
+    <div id="screen-level3" class="screen flex-col items-center justify-start min-h-screen p-4 w-full max-w-2xl mx-auto">
+        <div class="w-full mt-4 mb-6 flex justify-between items-center glass-card rounded-full px-5 py-3 shadow-md border-none">
+            <span class="font-bold text-teal-600"><i class="fa-solid fa-scale-balanced text-orange-400 mr-2"></i> Level 3: AI 判斷官</span>
+            <span class="text-sm font-bold text-purple-600 bg-purple-100 px-3 py-1 rounded-full" id="l3-progress">1 / 3</span>
+        </div>
+
+        <div class="glass-card rounded-3xl p-8 w-full shadow-xl animate-pop text-center border-none">
+            <div class="text-6xl mb-6 text-indigo-400 animate-float"><i class="fa-solid fa-robot"></i></div>
+            <h2 id="l3-scenario" class="text-xl md:text-2xl font-bold mb-8 leading-relaxed text-gray-800 text-left p-4 bg-gray-50 rounded-2xl border border-gray-100">情境載入中...</h2>
+            
+            <div class="flex flex-col gap-4">
+                <button onclick="answerL3('合理')" class="bg-white hover:bg-green-50 border-2 border-gray-200 hover:border-green-400 p-4 rounded-xl text-lg font-bold text-gray-700 hover:text-green-600 shadow-sm transition active:scale-95 text-left flex items-center">
+                    <span class="text-2xl mr-4">✅</span> 合理使用，沒有問題！
+                </button>
+                <button onclick="answerL3('可能侵權')" class="bg-white hover:bg-red-50 border-2 border-gray-200 hover:border-red-400 p-4 rounded-xl text-lg font-bold text-gray-700 hover:text-red-600 shadow-sm transition active:scale-95 text-left flex items-center">
+                    <span class="text-2xl mr-4">❌</span> 這樣做可能侵權喔！
+                </button>
+                <button onclick="answerL3('需查證')" class="bg-white hover:bg-yellow-50 border-2 border-gray-200 hover:border-yellow-400 p-4 rounded-xl text-lg font-bold text-gray-700 hover:text-yellow-600 shadow-sm transition active:scale-95 text-left flex items-center">
+                    <span class="text-2xl mr-4">🤔</span> 需要先查證圖片來源規定！
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 4: Result -->
+    <div id="screen-result" class="screen flex-col items-center justify-center min-h-screen p-4 w-full">
+        <div class="glass-card rounded-3xl p-8 w-full max-w-md shadow-2xl text-center relative overflow-hidden border-none">
+            
+            <h2 class="text-2xl font-extrabold mb-2 text-gray-700">測驗完成！</h2>
+            <div id="result-badge" class="text-8xl my-6 animate-float drop-shadow-lg">🏆</div>
+            <h3 id="result-title" class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-500 mb-6">稱號計算中...</h3>
+            
+            <div class="bg-white/60 rounded-2xl p-5 mb-6 shadow-sm border border-white">
+                <div class="flex justify-between mb-3 border-b border-gray-200 pb-2">
+                    <span class="text-gray-500 font-bold">挑戰者姓名</span>
+                    <span id="res-name" class="font-bold text-gray-800">---</span>
+                </div>
+                <div class="flex justify-between mb-3 border-b border-gray-200 pb-2">
+                    <span class="text-gray-500 font-bold">總分</span>
+                    <span id="res-score" class="font-extrabold text-pink-500 text-2xl">0</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500 font-bold">作答總時間</span>
+                    <span id="res-time" class="font-bold text-gray-800">0 秒</span>
+                </div>
+            </div>
+
+            <div id="upload-status" class="text-sm font-bold mb-6 text-purple-600 flex items-center justify-center bg-purple-100 py-2 rounded-lg">
+                <i class="fa-solid fa-spinner fa-spin mr-2"></i> 成績正在傳送給老師...
+            </div>
+
+            <button onclick="location.reload()" class="w-full bg-white hover:bg-gray-50 text-purple-600 border-2 border-purple-200 font-bold py-3 rounded-xl transition shadow-sm active:scale-95">
+                返回首頁再玩一次 <i class="fa-solid fa-rotate-right ml-2"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- Game Data ---
+        // Level 1: 10 Questions, 5 points each (Total 50)
+        const l1Questions = [
+            { q: "智慧財產是看得見、摸得到的財產。", a: false },
+            { q: "著作權自『創作完成時』就受到保護，不須登記。", a: true },
+            { q: "專利權不需要向政府申請，自己發明完就取得了。", a: false },
+            { q: "作品必須公開發表後，作者才享有著作權。", a: false },
+            { q: "著作人格權（如姓名表示權）可以轉讓或賣給別人。", a: false },
+            { q: "使用 AI 生成圖片，絕對沒有任何著作權侵權問題。", a: false },
+            { q: "商標的主要目的是用來辨識商品或服務的來源（品牌）。", a: true },
+            { q: "我腦海中想到一個超棒的故事『想法』，這個想法受著作權保護。", a: false },
+            { q: "作者過世後，其著作財產權還會存續 50 年。", a: true },
+            { q: "為了方便同學，把整本參考書拍照上傳到班級群組，不算合理使用。", a: true }
+        ];
+
+        // Level 2: 4 Items, 5 points each (Total 20)
+        const l2Items = [
+            { id: "i1", text: "🎵 周杰倫的新歌音樂", type: "著作權" },
+            { id: "i2", text: "🖱️ 人體工學滑鼠的新設計結構", type: "專利權" },
+            { id: "i3", text: "🍔 麥當勞的黃色大M標誌", type: "商標權" },
+            { id: "i4", text: "🥤 可口可樂從不公開的神祕配方", type: "營業祕密" }
+        ];
+
+        // Level 3: 3 Scenarios, 10 points each (Total 30)
+        // Total possible score = 50 + 20 + 30 = 100
+        const l3Scenarios = [
+            { 
+                q: "情境一：小明把網路上知名畫家的付費插圖存下來，直接丟給AI修改顏色跟背景，當作自己的大頭貼。",
+                a: "可能侵權" 
+            },
+            { 
+                q: "情境二：小華用AI生成一段完全隨機的背景音樂，放在自己的日常Vlog中分享（無營利，且未模仿特定歌曲）。",
+                a: "合理" 
+            },
+            { 
+                q: "情境三：小美在網路上看到別人發布的AI漂亮圖片，不知道來源與版權規範，就直接拿來印在衣服上販售。",
+                a: "需查證" 
+            }
+        ];
+
+        // --- State Variables ---
+        let userData = { class: "", seat: "", name: "" };
+        let scores = { l1: 0, l2: 0, l3: 0 };
+        let gameTime = { start: 0, end: 0 };
+        
+        let l1CurrentQ = 0;
+        let l1Timer;
+        let l1TimeLeft = 60;
+
+        let l2SelectedEl = null;
+        let l3CurrentQ = 0;
+
+        // --- Audio Context for simple sounds ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playSound(type) {
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            if (type === 'correct') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); 
+                osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1); 
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+            } else if (type === 'wrong') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+                osc.frequency.setValueAtTime(150, audioCtx.currentTime + 0.2);
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+            } else if (type === 'pop') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+            }
+        }
+
+        // --- Utility ---
+        function switchScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // --- Init & Login ---
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            userData.class = document.getElementById('user-class').value;
+            userData.seat = document.getElementById('user-seat').value;
+            userData.name = document.getElementById('user-name').value;
+            
+            // Randomize Level 1 questions order
+            l1Questions.sort(() => Math.random() - 0.5);
+            
+            // Go to Study Section instead of L1 immediately
+            switchScreen('screen-study');
+        });
+
+        // --- Level 1 Logic ---
+        function startLevel1() {
+            gameTime.start = Date.now(); // Start timer AFTER reading study material
+            switchScreen('screen-level1');
+            l1CurrentQ = 0;
+            l1TimeLeft = 60;
+            scores.l1 = 0;
+            
+            document.getElementById('l1-timer').innerText = l1TimeLeft;
+            document.getElementById('l1-timer').parentElement.classList.remove('text-red-500', 'animate-pulse');
+            renderL1Question();
+            
+            l1Timer = setInterval(() => {
+                l1TimeLeft--;
+                document.getElementById('l1-timer').innerText = l1TimeLeft;
+                if(l1TimeLeft <= 10) document.getElementById('l1-timer').parentElement.classList.add('text-red-500', 'animate-pulse');
+                
+                if (l1TimeLeft <= 0) {
+                    clearInterval(l1Timer);
+                    endLevel1();
+                }
+            }, 1000);
+        }
+
+        function renderL1Question() {
+            if (l1CurrentQ >= l1Questions.length) {
+                endLevel1();
+                return;
+            }
+            document.getElementById('l1-qnum').innerText = `題號 ${l1CurrentQ + 1}/${l1Questions.length}`;
+            document.getElementById('l1-question').innerText = l1Questions[l1CurrentQ].q;
+            document.getElementById('l1-progress').style.width = `${((l1CurrentQ) / l1Questions.length) * 100}%`;
+        }
+
+        function answerL1(userAns) {
+            const correctAns = l1Questions[l1CurrentQ].a;
+            const feedbackEl = document.getElementById('l1-feedback');
+            
+            if (userAns === correctAns) {
+                playSound('correct');
+                scores.l1 += 5;
+                feedbackEl.innerHTML = '<i class="fa-solid fa-check text-green-500 drop-shadow-lg"></i>';
+            } else {
+                playSound('wrong');
+                feedbackEl.innerHTML = '<i class="fa-solid fa-xmark text-red-500 drop-shadow-lg"></i>';
+            }
+            
+            feedbackEl.classList.remove('opacity-0', 'scale-50');
+            feedbackEl.classList.add('opacity-100', 'scale-150', 'animate-pop');
+            
+            setTimeout(() => {
+                feedbackEl.classList.remove('opacity-100', 'scale-150', 'animate-pop');
+                feedbackEl.classList.add('opacity-0', 'scale-50');
+                l1CurrentQ++;
+                renderL1Question();
+            }, 300);
+        }
+
+        function endLevel1() {
+            clearInterval(l1Timer);
+            startLevel2();
+        }
+
+        // --- Level 2 Logic ---
+        function startLevel2() {
+            switchScreen('screen-level2');
+            const container = document.getElementById('l2-items-container');
+            container.innerHTML = '';
+            
+            let items = [...l2Items].sort(() => Math.random() - 0.5);
+            
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'bg-white font-bold p-3 rounded-xl text-sm text-gray-700 text-center cursor-pointer hover:bg-pink-50 transition active:scale-95 shadow-sm border border-gray-100';
+                div.innerText = item.text;
+                div.dataset.id = item.id;
+                div.dataset.type = item.type;
+                div.onclick = () => selectItem(div);
+                container.appendChild(div);
+            });
+        }
+
+        function selectItem(el) {
+            playSound('pop');
+            if(l2SelectedEl) {
+                l2SelectedEl.classList.remove('selected-item');
+            }
+            if(l2SelectedEl === el) {
+                l2SelectedEl = null;
+                return;
+            }
+            l2SelectedEl = el;
+            l2SelectedEl.classList.add('selected-item');
+        }
+
+        function dropItem(zoneType) {
+            if(!l2SelectedEl) return;
+            playSound('pop');
+            
+            const targetZone = document.getElementById(`zone-${zoneType}`);
+            l2SelectedEl.classList.remove('selected-item');
+            l2SelectedEl.classList.add('text-xs', 'p-2', 'bg-white/90');
+            l2SelectedEl.onclick = function() {
+                document.getElementById('l2-items-container').appendChild(this);
+                this.classList.remove('text-xs', 'p-2', 'bg-white/90');
+                this.onclick = () => selectItem(this);
+                checkL2Complete();
+            };
+
+            targetZone.appendChild(l2SelectedEl);
+            l2SelectedEl = null;
+            checkL2Complete();
+        }
+
+        function checkL2Complete() {
+            const remaining = document.getElementById('l2-items-container').children.length;
+            const btn = document.getElementById('btn-l2-check');
+            if(remaining === 0) {
+                btn.classList.remove('hidden');
+                btn.classList.add('animate-pop');
+            } else {
+                btn.classList.add('hidden');
+            }
+        }
+
+        function checkLevel2() {
+            scores.l2 = 0;
+            ['著作權', '專利權', '商標權', '營業祕密'].forEach(type => {
+                const zone = document.getElementById(`zone-${type}`);
+                Array.from(zone.children).forEach(child => {
+                    if(child.dataset.type === type) {
+                        scores.l2 += 5; 
+                    }
+                });
+            });
+            startLevel3();
+        }
+
+        // --- Level 3 Logic ---
+        function startLevel3() {
+            switchScreen('screen-level3');
+            l3CurrentQ = 0;
+            scores.l3 = 0;
+            renderL3Question();
+        }
+
+        function renderL3Question() {
+            if (l3CurrentQ >= l3Scenarios.length) {
+                finishGame();
+                return;
+            }
+            document.getElementById('l3-progress').innerText = `${l3CurrentQ + 1} / ${l3Scenarios.length}`;
+            document.getElementById('l3-scenario').innerText = l3Scenarios[l3CurrentQ].q;
+        }
+
+        function answerL3(ans) {
+            if (ans === l3Scenarios[l3CurrentQ].a) {
+                playSound('correct');
+                scores.l3 += 10;
+            } else {
+                playSound('wrong');
+            }
+            l3CurrentQ++;
+            setTimeout(() => { renderL3Question(); }, 300);
+        }
+
+        // --- Result & Data Submission ---
+        function finishGame() {
+            gameTime.end = Date.now();
+            const timeTaken = Math.floor((gameTime.end - gameTime.start) / 1000);
+            const totalScore = scores.l1 + scores.l2 + scores.l3;
+            
+            switchScreen('screen-result');
+            
+            document.getElementById('res-name').innerText = userData.name;
+            document.getElementById('res-score').innerText = totalScore;
+            document.getElementById('res-time').innerText = `${timeTaken} 秒`;
+            
+            let badge = ""; let title = "";
+            if (totalScore >= 90) { badge = "🦄"; title = "IP守護神"; } 
+            else if (totalScore >= 70) { badge = "💡"; title = "智慧創作者"; } 
+            else if (totalScore >= 60) { badge = "⚖️"; title = "守法小達人"; } 
+            else { badge = "💦"; title = "再挑戰一次"; }
+            
+            document.getElementById('result-badge').innerText = badge;
+            document.getElementById('result-title').innerText = title;
+
+            submitData(totalScore, timeTaken, title);
+        }
+
+        function submitData(score, timeSeconds, levelName) {
+            const payload = {
+                class: userData.class,
+                seat: userData.seat,
+                name: userData.name,
+                score: score,
+                time: timeSeconds,
+                level: levelName,
+                date: new Date().toLocaleString()
+            };
+
+            // 👉 將下方的 URL 替換成你部署 Google Apps Script 後取得的網址
+            const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz_XXXXXXXXXXXX/exec"; 
+
+            const statusEl = document.getElementById('upload-status');
+            
+            // --- 取消下面這段的註解 (/* ... */) 即可啟動真實上傳 ---
+            
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors", 
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            }).then(() => {
+                statusEl.innerHTML = '<i class="fa-solid fa-cloud-check text-green-500 mr-2"></i> 成績已成功傳送給老師！';
+            }).catch(error => {
+                console.error("Upload error:", error);
+                statusEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-red-500 mr-2"></i> 網路錯誤，請截圖給老師！';
+            });
+            
+        }
+    </script>
+</body>
+</html>
