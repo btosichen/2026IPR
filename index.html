@@ -276,9 +276,16 @@
                 <i class="fa-solid fa-spinner fa-spin mr-2"></i> 成績正在傳送給老師...
             </div>
 
-            <button onclick="location.reload()" class="w-full bg-white hover:bg-gray-50 text-purple-600 border-2 border-purple-200 font-bold py-3 rounded-xl transition shadow-sm active:scale-95">
-                返回首頁再玩一次 <i class="fa-solid fa-rotate-right ml-2"></i>
-            </button>
+            <!-- 兩顆按鈕群組：確認作答紀錄 & 重新挑戰 -->
+            <div class="flex flex-col gap-3 mt-4">
+                <a href="https://docs.google.com/spreadsheets/d/1GSyldeaqsJduxPoD4etq36EML_0JNje3rNCetOmWw9o/edit?usp=sharing" target="_blank" class="w-full bg-blue-50 hover:bg-blue-100 text-blue-600 border-2 border-blue-200 font-bold py-3 rounded-xl transition shadow-sm active:scale-95 text-center flex items-center justify-center">
+                    查看我的作答紀錄 <i class="fa-solid fa-square-arrow-up-right ml-2"></i>
+                </a>
+                
+                <button onclick="location.reload()" class="w-full bg-white hover:bg-gray-50 text-gray-500 border-2 border-gray-200 font-bold py-3 rounded-xl transition shadow-sm active:scale-95 flex items-center justify-center">
+                    返回首頁再玩一次 <i class="fa-solid fa-rotate-right ml-2"></i>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -588,7 +595,7 @@
                 date: new Date().toLocaleString()
             };
 
-            // 👉 已經替換為你專屬的 Google Apps Script 網址
+            // 你的 Google Apps Script 網址
             const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwazoDXBhJeytH4ttNhF6KVo8oabXNbSEi8WfTvmKG21s8fJEErr3YbxEydk9t3DDS1/exec"; 
 
             const statusEl = document.getElementById('upload-status');
